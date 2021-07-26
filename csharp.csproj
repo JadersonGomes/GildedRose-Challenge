@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Category.cs" />
+    <Compile Include="Enums\SubCategory.cs" />
     <Compile Include="Tests\ApprovalTest.cs" />
     <Compile Include="Tests\GildedRoseTest.cs" />
     <Compile Include="Program.cs" />

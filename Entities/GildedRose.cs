@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,67 +29,92 @@ namespace csharp.Repository.Entities
         /// </summary>
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert" && Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                Category category = GetCategory(item);
+                SubCategory subCategory = GetSubCategory(item);
+
+                if (category != Category.Special)
                 {
-                    if (Items[i].Quality > 0)
+                    if (item.Quality > 0)
                     {
-                        Items[i].Quality = Items[i].Quality - 1;
+                        item.Quality = item.Quality - 1;
+
+                        if (subCategory == SubCategory.Magic)
+                            item.Quality = item.Quality - 1;
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (item.Quality < 50)
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
+                        item.Quality = item.Quality + 1;
 
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert" && Items[i].Quality < 50)
+                        if (subCategory == SubCategory.BackstagePass && item.Quality < 50)
                         {
-                            if (Items[i].SellIn < 6)
-                            {
-                                Items[i].Quality = Items[i].Quality + 2;
-                            }
-                            else if (Items[i].SellIn < 11)
-                            {
-                                Items[i].Quality = Items[i].Quality + 1;
-                            }
+                            if (item.SellIn < 6)
+                                item.Quality = item.Quality + 2;
+
+                            else if (item.SellIn < 11)
+                                item.Quality = item.Quality + 1;
+
                         }
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                if (subCategory != SubCategory.Legendary)
+                    item.SellIn = item.SellIn - 1;
 
-                }
-
-                if (Items[i].SellIn < 0)
+                if (item.SellIn < 0)
                 {
-                    if (Items[i].Name == "Aged Brie")
+                    if (category != Category.Special)
                     {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
-                    else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                        if (item.Quality > 0)
+                            item.Quality = item.Quality - 1;
+
                     }
                     else
                     {
-                        if (Items[i].Quality > 0)
+                        if (subCategory == SubCategory.Cheese)
                         {
-                            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                Items[i].Quality = Items[i].Quality - 1;
-                            }
+                            if (item.Quality < 50)
+                                item.Quality = item.Quality + 1;
+
+                        }
+                        else if (subCategory == SubCategory.BackstagePass)
+                        {
+                            item.Quality = item.Quality - item.Quality;
                         }
                     }
                 }
-            }
 
+            }
         }
+
+        private SubCategory GetSubCategory(Item item)
+        {
+            switch (item.Name)
+            {
+                case "Aged Brie":
+                    return SubCategory.Cheese;
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    return SubCategory.BackstagePass;
+                case "Sulfuras, Hand of Ragnaros":
+                    return SubCategory.Legendary;
+                case "Conjured Mana Cake":
+                    return SubCategory.Magic;
+                default:
+                    return SubCategory.Normal;
+            }
+        }
+
+        private Category GetCategory(Item item)
+        {
+            if (item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert" || item.Name == "Sulfuras, Hand of Ragnaros")
+                return Category.Special;
+            else
+                return Category.Common;
+        }
+
     }
 }

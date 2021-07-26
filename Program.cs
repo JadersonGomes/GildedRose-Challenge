@@ -25,11 +25,11 @@ namespace csharp
             {
                 Console.WriteLine("-------- day " + i + " --------");
                 Console.WriteLine("name, sellIn, quality");
-
+                
                 // Imprime os itens e seus respectivos valores para o dia em questão
                 for (var j = 0; j < items.Count; j++)
                 {
-                    System.Console.WriteLine(items[j]);
+                    System.Console.WriteLine(items[j].ToString());
                 }
                 Console.WriteLine("");
                 app.UpdateQuality();
