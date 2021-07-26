@@ -18,6 +18,10 @@ namespace csharp.Service.Implementations
             _repositoryGildedRose = repositoryGildedRose;
         }
 
+        /// <summary>
+        /// Utiliza a dependência do repositório para retornar a lista inicial de itens
+        /// </summary>
+        /// <returns>Lista inicial de itens</returns>
         public IList<Item> GetItems()
         {
             try

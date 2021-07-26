@@ -14,11 +14,18 @@ namespace csharp.Repository.Entities
             this.Items = Items;
         }
 
+        /// <summary>
+        /// Utilizado para recuperar a lista privada da classe (Getter)
+        /// </summary>
+        /// <returns></returns>
         public IList<Item> GetItems()
         {
             return this.Items;
         }
 
+        /// <summary>
+        /// Método responsável por atualizar a qualidade dos itens da lista
+        /// </summary>
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)

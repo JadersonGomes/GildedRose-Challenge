@@ -12,6 +12,10 @@ namespace csharp.Tests
 {
     public static class Helper
     {
+        /// <summary>
+        /// Executa o método updateQuality com a lista inicial de itens em 31 dias (representando os dias do mês)
+        /// </summary>
+        /// <returns>Retorna a lista inicial de itens após o processamento pelo método updateQuality</returns>
         public static IList<Item> GetFinalStageItems()
         {
             IGildedRoseService _service = new GildedRoseService(new GildedRoseRepository());

@@ -11,7 +11,7 @@ namespace csharp
     [TestFixture]
     public class GildedRoseTest
     {
-
+        
         [Test]
         public void foo()
         {
@@ -21,8 +21,11 @@ namespace csharp
             Assert.AreEqual("foo", Items[0].Name);
         }
 
+        /// <summary>
+        /// Testa se a lista possui no mínimo um item
+        /// </summary>
         [Test]
-        public void shouldHaveItems()
+        public void ShouldHaveItems()
         {
             // Arrange
             IGildedRoseRepository sut = new GildedRoseRepository();
@@ -34,8 +37,11 @@ namespace csharp
             Assert.That(items, Is.Not.Empty);
         }
 
+        /// <summary>
+        /// Testa se o item 'Aged Brie' não está ultrapassando o limite de máximo de qualidade (50)
+        /// </summary>
         [Test]
-        public void shouldHaveMaxQualityForAgedBrie()
+        public void ShouldHaveMaxQualityForAgedBrie()
         {
             // Arrange
             var finalStageItems = Helper.GetFinalStageItems();
@@ -48,8 +54,11 @@ namespace csharp
             Assert.That(finalQuality, Is.EqualTo(result));
         }
 
+        /// <summary>
+        /// Testa se todos os itens possuem qualidade acima de 0
+        /// </summary>
         [Test]
-        public void shouldHavePositiveQuality()
+        public void ShouldHavePositiveQuality()
         {
             //Arrange            
             var items = Helper.GetFinalStageItems();
@@ -61,8 +70,11 @@ namespace csharp
             Assert.That(result, Is.Empty);
         }
 
+        /// <summary>
+        /// Testa se existe algum item da lista que possui qualidade acima da máxima permitida, exceto para itens lendários
+        /// </summary>
         [Test]
-        public void shouldNotHaveMoreThanFiftyQuality()
+        public void ShouldNotHaveMoreThanFiftyQuality()
         {
             // Arrange
             var finalStageItems = Helper.GetFinalStageItems();
@@ -74,8 +86,11 @@ namespace csharp
             Assert.That(itemWithMoreThanFiftyQuality, Is.Null);
         }
 
+        /// <summary>
+        /// Teste se o item lendário possui qualidade acima do máximo permitido para itens comuns
+        /// </summary>
         [Test]
-        public void shouldBeSulfurasWithLegendQuality()
+        public void ShouldBeSulfurasWithLegendQuality()
         {
             // Arrange
             var finalStageItems = Helper.GetFinalStageItems();
@@ -90,8 +105,11 @@ namespace csharp
             }
         }
 
+        /// <summary>
+        /// Testa se os itens com data de venda expirada estão com a qualidade zero (exceto itens lendários e 'Aged Brie')
+        /// </summary>
         [Test]
-        public void shouldHaveQualityEqualZero()
+        public void ShouldHaveQualityEqualZero()
         {
             // Arrange
             var finalStageItems = Helper.GetFinalStageItems();
@@ -104,8 +122,11 @@ namespace csharp
 
         }
 
+        /// <summary>
+        /// Testa se o novo item adicionado está diminuindo a qualidade duas vezes mais rápido que os demais
+        /// </summary>
         [Test]
-        public void shouldDoubleDecreaseQualityForConjured()
+        public void ShouldDoubleDecreaseQualityForConjured()
         {
             // Arrange
             IList<Item> items = new List<Item>
@@ -137,9 +158,11 @@ namespace csharp
             Assert.That(dexterityQuality, Is.EqualTo((result)));
         }
 
-
+        /// <summary>
+        /// Testa se os itens 'Backstage' zeram a qualidade imediatamente após a data de venda ser menor que 0
+        /// </summary>
         [Test]
-        public void shouldBeZeroWhenSellInIsNegative()
+        public void ShouldBeZeroWhenSellInIsNegative()
         {
             // Arrange
             IList<Item> items = new List<Item>()
@@ -162,8 +185,11 @@ namespace csharp
             Assert.That(isZero, Is.EqualTo(true));
         }
 
+        /// <summary>
+        /// Testa se o item 'Aged Brie' aumenta a sua qualidade de um em um
+        /// </summary>
         [Test]
-        public void shouldAddOneForAgedBrie()
+        public void ShouldAddOneForAgedBrie()
         {
             // Arrange
             IList<Item> items = new List<Item>()
@@ -181,10 +207,15 @@ namespace csharp
             Assert.That(expectedQuality, Is.EqualTo(returnedQuality));
         }
 
+        /// <summary>
+        /// Testa se o item 'Backstage' diminui 2 ou 3 caso a qualidade esteja abaixo de 11 e 6 respectivamente
+        /// </summary>
+        /// <param name="sellIn">Valor inicial da data de venda</param>
+        /// <param name="expected">Valor esperado para o teste</param>
         [Test]
         [TestCase(10, 22)]
         [TestCase(5, 23)]
-        public void shouldIncreaseTwoIfSellInIsLessThanTen(int sellIn, int expected)
+        public void ShouldIncreaseTwoOrThreeIfSellInIsLessThanTen(int sellIn, int expected)
         {
             // Arrange
             IList<Item> items = new List<Item>()

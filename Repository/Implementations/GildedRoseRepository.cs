@@ -10,6 +10,10 @@ namespace csharp.Repository.Implementations
 {
     class GildedRoseRepository : IGildedRoseRepository
     {
+        /// <summary>
+        /// Cria a lista de itens da loja  
+        /// </summary>
+        /// <returns>Lista de Itens iniciais</returns>
         public List<Item> GetItems()
         {
             try

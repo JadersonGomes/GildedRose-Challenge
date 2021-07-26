@@ -11,6 +11,9 @@ namespace csharp
     [TestFixture]
     public class ApprovalTest
     {
+        /// <summary>
+        /// Teste utilizado para comparar os valores gerados ao final do processamento
+        /// </summary>
         [Test]
         public void ThirtyDays()
         {
